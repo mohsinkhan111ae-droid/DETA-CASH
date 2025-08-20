@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sexy Login</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      width: 360px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+      text-align: center;
+      color: white;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 28px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px #00f7ff;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 15px;
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    input::placeholder {
+      color: #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: white;
+    }
+
+    .login-btn {
+      background: linear-gradient(45deg, #ff416c, #ff4b2b);
+    }
+
+    .login-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .signup-btn {
+      background: linear-gradient(45deg, #2575fc, #6a11cb);
+    }
+
+    .signup-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .msg {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🚀 Welcome</h2>
+    <input type="email" id="email" placeholder="Enter Email" required />
+    <input type="password" id="password" placeholder="Enter Password" required />
+    <button class="login-btn" onclick="login()">Login</button>
+    <button class="signup-btn" onclick="signup()">Create Account</button>
+    <p class="msg" id="msg"></p>
+  </div>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+  <script>
+    // 🔑 Dummy Firebase Config (replace later)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDummyKey123456",
+      authDomain: "demo-project.firebaseapp.com",
+      projectId: "demo-project",
+      storageBucket: "demo-project.appspot.com",
+      messagingSenderId: "1234567890",
+      appId: "1:1234567890:web:abcdef123456"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    function login() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById("msg").style.color = "lightgreen";
+          document.getElementById("msg").innerText = "✅ Login Successful!";
+        })
+        .catch(err => {
+          document.getElementById("msg").style.color = "red";
+          document.getElementById("msg").innerText = err.message;
+        });
+    }
+
+    function signup() {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById("msg").style.color = "lightgreen";
+          document.getElementById("msg").innerText = "🎉 Account Created!";
+        })
+        .catch(err => {
+          document.getElementById("msg").style.color = "red";
+          document.getElementById("msg").innerText = err.message;
+        });
+    }
+  </script>
+</body>
+</html>
